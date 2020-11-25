@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', # This is used by the social account app to create the proper callback URLs when connecting via social media accounts.
+    'allauth',
+    'allauth.account', # allows all the normal account stuff: login, logout, recover pass,etc.
+    'allauth.socialaccount', # allows to create an account and login with social media accounts.
 ]
 
 MIDDLEWARE = [
@@ -59,13 +63,34 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                # allows allauth and django to access the http request object in my templates.
+                'django.template.context_processors.request', # required by allauth.
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email' # Tells allauth that we want to allow authenticaion using usernames or emails.
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/' # This is the url where the user is redirect to after logging in.
 
 WSGI_APPLICATION = 'boutique_ado.wsgi.application'
 
