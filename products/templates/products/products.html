@@ -82,6 +82,12 @@
                                             {% else %}
                                                 <small class="text-muted">No Rating</small>
                                             {% endif %}
+                                            {% if request.user.is_superuser %}
+                                                <small class="ml-3">
+                                                    <a href="{% url 'edit_product' product.id %}">Edit</a> | 
+                                                    <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
+                                                </small>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -120,7 +126,7 @@
 {% endblock %}
 
 {% block postloadjs %}
-    {{ block.super }} <!-- This block.super allows to append this chink of code to whatever is already in the block instead of replacing it. -->
+    {{ block.super }} <!-- This block.super allows to append this chunk of code to whatever is already in the block instead of replacing it. -->
     <script type="text/javascript">
         $('.btt-link').click(function(e) {
             window.scrollTo(0,0)
