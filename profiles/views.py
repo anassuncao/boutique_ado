@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 from .models import UserProfile
 from .forms import UserProfileForm
 
 from checkout.models import Order
 
 
+# Makes django first check if the user is logged in before executing the following view
+@login_required
 def profile(request):
     """ Display the user's profile. """
     profile = get_object_or_404(UserProfile, user=request.user)
