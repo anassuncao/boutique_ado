@@ -9,4 +9,8 @@ $('#id_default_country').change(function() {
     } else {
         $(this).css('color', '#000');
     }
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> da47fd651469a0d989c1e93aeb134cbaea54009b
